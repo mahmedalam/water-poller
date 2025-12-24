@@ -1,11 +1,12 @@
-import { Text, View } from "react-native";
+import { Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text className="text-4xl font-bold text-blue-500">
-        Welcome to Nativewind!
+    <SafeAreaView className="flex-1 items-center justify-center bg-black">
+      <Text className="text-4xl text-center text-blue-500 font-inter-bold">
+        Welcome to my React Native Application!
       </Text>
-    </View>
+    </SafeAreaView>
   );
 }
