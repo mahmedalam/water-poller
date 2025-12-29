@@ -13,7 +13,12 @@ module.exports = {
         "inter-regular": ["Inter-Regular", "sans-serif"],
         "inter-light": ["Inter-Light", "sans-serif"],
       },
+      colors: {
+        background: "#010A13",
+        foreground: "#FFFFFF",
+        primary: "#00C3FF",
+      },
     },
   },
   plugins: [],
-}
+};
