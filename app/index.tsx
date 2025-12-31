@@ -33,7 +33,7 @@ export default function Index() {
     <SafeAreaView className="flex-1 items-center justify-center bg-background">
       {/*List of Schedules*/}
       <FlatList
-        className="w-full px-4"
+        className="w-full"
         ListHeaderComponent={() => (
           <Fragment>
             {/*Hero*/}
@@ -65,7 +65,7 @@ export default function Index() {
               </Text>
             </View>
             {/*H2*/}
-            <View className="mx-4 my-6 flex flex-row gap-2">
+            <View className="mx-auto my-6 flex flex-row gap-2">
               <Image source={waterIconX24} />
               <Text className="text-2xl font-inter-bold text-foreground">
                 Upcoming Supplies
@@ -76,8 +76,8 @@ export default function Index() {
         data={upcomingSchedules}
         keyExtractor={(item) => item.date}
         renderItem={({ item }) => (
-          <Fragment>
-            {item.schedule?.map((schedule, index) => (
+          <View className="px-4">
+            {item.schedules.map((schedule, index) => (
               <Pressable
                 className="w-full bg-primary/10 p-4 flex gap-3 border border-primary/10 rounded-2xl mb-3"
                 key={index}
@@ -104,7 +104,7 @@ export default function Index() {
                 </View>
               </Pressable>
             ))}
-          </Fragment>
+          </View>
         )}
       />
     </SafeAreaView>

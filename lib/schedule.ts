@@ -103,7 +103,7 @@ export function getUpcomingSchedule(scheduleData: TAllSchedules[]) {
 
         return {
           ...day,
-          schedule: filteredSchedules,
+          schedules: filteredSchedules,
         };
       })
   );
