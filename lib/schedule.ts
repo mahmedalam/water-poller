@@ -1,4 +1,4 @@
-function createDateTime(dateStr: string, timeStr: string): Date {
+export function createDateTime(dateStr: string, timeStr: string): Date {
   const [time, modifier] = timeStr.split(" ");
   let [hours, minutes] = time.split(":").map(Number);
 
@@ -10,14 +10,14 @@ function createDateTime(dateStr: string, timeStr: string): Date {
   return date;
 }
 
-type TAllSchedules = {
+export type TAllSchedules = {
   date: string;
   hasWater: boolean;
   area: TArea;
   schedules: TSchedule[];
 };
 
-type TArea = {
+export type TArea = {
   areaName: string;
   onDays: number;
   offDays: number;
@@ -25,14 +25,14 @@ type TArea = {
   admin: string;
 };
 
-type TSchedule = {
+export type TSchedule = {
   name: string;
   time: string;
   duration: string;
   area: string;
 };
 
-function createSchedule(
+export function createSchedule(
   area: TArea,
   schedules: TSchedule[],
   totalDays = 30,
@@ -106,5 +106,31 @@ export function getUpcomingSchedule(scheduleData: TAllSchedules[]) {
           schedules: filteredSchedules,
         };
       })
+      .filter((day) => day.schedules.length > 0)
   );
+}
+
+// console.log(getUpcomingSchedule(createSchedule(area, schedules)));
+// Note: Run a cron job after every 30days on appwrite functions or a specific cron job service provider!
+
+export function flattenSupplies(upcomingSchedules: TAllSchedules[]) {
+  const result: {
+    date: string;
+    time: string;
+    name: string;
+    area: string;
+  }[] = [];
+
+  for (const day of upcomingSchedules) {
+    for (const s of day.schedules) {
+      result.push({
+        date: day.date,
+        time: s.time,
+        name: s.name,
+        area: s.area,
+      });
+    }
+  }
+
+  return result;
 }

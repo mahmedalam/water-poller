@@ -30,7 +30,17 @@ export function useCountdown(targetDate: string | Date) {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft(getCountdown(targetDate));
+      const next = getCountdown(targetDate);
+      setTimeLeft(next);
+
+      if (
+        next.days === 0 &&
+        next.hours === 0 &&
+        next.minutes === 0 &&
+        next.seconds === 0
+      ) {
+        clearInterval(timer);
+      }
     }, 1000);
 
     return () => clearInterval(timer);

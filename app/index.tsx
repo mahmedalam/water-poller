@@ -17,17 +17,38 @@ import {
   settingsIconX32,
   waterIconX24,
 } from "@/constants";
-import { Fragment } from "react";
-import { createDateTime } from "@/lib/utils";
-import { getUpcomingSchedule } from "@/lib/schedule";
+import { Fragment, useEffect, useMemo, useState } from "react";
+import {
+  createDateTime,
+  flattenSupplies,
+  getUpcomingSchedule,
+} from "@/lib/schedule";
+import { initNotifications } from "@/lib/notifications";
+import { scheduleWaterNotifications } from "@/lib/notificationScheduler";
 
 export default function Index() {
   const upcomingSchedules = getUpcomingSchedule(sampleSchedule);
-  const targetDate = createDateTime(
-    upcomingSchedules[0].date,
-    upcomingSchedules[0].schedules[0].time,
+  const supplies = useMemo(
+    () => flattenSupplies(upcomingSchedules),
+    [upcomingSchedules],
   );
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const currentSupply = supplies[currentIndex];
+
+  const targetDate = createDateTime(currentSupply.date, currentSupply.time);
   const { days, hours, minutes, seconds } = useCountdown(targetDate);
+
+  useEffect(() => {
+    if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
+      setCurrentIndex((prev) => (prev + 1 < supplies.length ? prev + 1 : prev));
+    }
+  }, [days, hours, minutes, seconds, supplies.length]);
+
+  useEffect(() => {
+    initNotifications();
+    scheduleWaterNotifications(upcomingSchedules);
+  }, [upcomingSchedules]);
 
   return (
     <SafeAreaView className="flex-1 items-center justify-center bg-background">
