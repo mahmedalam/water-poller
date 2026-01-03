@@ -1,5 +1,6 @@
 import { clearAllNotifications, scheduleNotification } from "./notifications";
 import { createDateTime, TAllSchedules } from "./schedule";
+import { timeToString } from "@/lib/utils";
 
 export async function scheduleWaterNotifications(
   upcomingSchedules: TAllSchedules[],
@@ -16,8 +17,8 @@ export async function scheduleWaterNotifications(
       if (notifyAt <= now) continue;
 
       await scheduleNotification(
-        "💧 Water Supply Reminder",
-        `${supply.name} at ${supply.time} • ${supply.area}`,
+        "💧 Water Poller",
+        `${supply.name} at ${timeToString(supply.time)} • ${supply.area}`,
         notifyAt,
       );
     }

@@ -25,6 +25,7 @@ import {
 } from "@/lib/schedule";
 import { initNotifications } from "@/lib/notifications";
 import { scheduleWaterNotifications } from "@/lib/notificationScheduler";
+import { durationToString, timeToString } from "@/lib/utils";
 
 export default function Index() {
   const upcomingSchedules = getUpcomingSchedule(sampleSchedule);
@@ -115,7 +116,8 @@ export default function Index() {
                   <View className="flex flex-row items-center gap-2 opacity-75">
                     <Image source={clockIconX16} />
                     <Text className="text-foreground">
-                      {schedule.time} • {schedule.duration}
+                      {timeToString(schedule.time)} •{" "}
+                      {durationToString(schedule.duration)}
                     </Text>
                   </View>
                   <View className="flex flex-row items-center gap-2 opacity-75">

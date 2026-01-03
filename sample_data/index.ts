@@ -1,7 +1,8 @@
-export const sampleSchedule = [
+import { TAllSchedules } from "@/lib/schedule";
+
+export const sampleSchedule: TAllSchedules[] = [
   {
-    date: "Tue Dec 23 2025",
-    hasWater: true,
+    date: "Sun Jan 4 2026",
     area: {
       areaName: "Ali Masjid",
       onDays: 2,
@@ -12,21 +13,20 @@ export const sampleSchedule = [
     schedules: [
       {
         name: "Morning Supply",
-        time: "09:00 am",
-        duration: "3hrs",
+        time: { hours: 1, minutes: 31, modifier: "am" },
+        duration: { hours: 1, minutes: 30 },
         area: "Ali Masjid",
       },
       {
         name: "Evening Supply",
-        time: "05:00 pm",
-        duration: "1.5hrs",
+        time: { hours: 1, minutes: 32, modifier: "am" },
+        duration: { hours: 2, minutes: 0 },
         area: "Ali Masjid",
       },
     ],
   },
   {
     date: "Wed Dec 24 2025",
-    hasWater: true,
     area: {
       areaName: "Ali Masjid",
       onDays: 2,
@@ -37,21 +37,20 @@ export const sampleSchedule = [
     schedules: [
       {
         name: "Morning Supply",
-        time: "09:00 am",
-        duration: "3hrs",
+        time: { hours: 9, minutes: 30, modifier: "am" },
+        duration: { hours: 1, minutes: 30 },
         area: "Ali Masjid",
       },
       {
         name: "Evening Supply",
-        time: "05:00 pm",
-        duration: "1.5hrs",
+        time: { hours: 5, minutes: 0, modifier: "pm" },
+        duration: { hours: 2, minutes: 0 },
         area: "Ali Masjid",
       },
     ],
   },
   {
     date: "Mon Dec 29 2025",
-    hasWater: true,
     area: {
       areaName: "Ali Masjid",
       onDays: 2,
@@ -62,21 +61,20 @@ export const sampleSchedule = [
     schedules: [
       {
         name: "Morning Supply",
-        time: "09:00 am",
-        duration: "3hrs",
+        time: { hours: 9, minutes: 30, modifier: "am" },
+        duration: { hours: 1, minutes: 30 },
         area: "Ali Masjid",
       },
       {
         name: "Evening Supply",
-        time: "05:00 pm",
-        duration: "1.5hrs",
+        time: { hours: 5, minutes: 0, modifier: "pm" },
+        duration: { hours: 2, minutes: 0 },
         area: "Ali Masjid",
       },
     ],
   },
   {
     date: "Tue Dec 30 2025",
-    hasWater: true,
     area: {
       areaName: "Ali Masjid",
       onDays: 2,
@@ -87,21 +85,20 @@ export const sampleSchedule = [
     schedules: [
       {
         name: "Morning Supply",
-        time: "09:00 am",
-        duration: "3hrs",
+        time: { hours: 9, minutes: 30, modifier: "am" },
+        duration: { hours: 1, minutes: 30 },
         area: "Ali Masjid",
       },
       {
         name: "Evening Supply",
-        time: "05:00 pm",
-        duration: "1.5hrs",
+        time: { hours: 5, minutes: 0, modifier: "pm" },
+        duration: { hours: 2, minutes: 0 },
         area: "Ali Masjid",
       },
     ],
   },
   {
     date: "Sun Jan 04 2026",
-    hasWater: true,
     area: {
       areaName: "Ali Masjid",
       onDays: 2,
@@ -112,21 +109,20 @@ export const sampleSchedule = [
     schedules: [
       {
         name: "Morning Supply",
-        time: "09:00 am",
-        duration: "3hrs",
+        time: { hours: 9, minutes: 30, modifier: "am" },
+        duration: { hours: 1, minutes: 30 },
         area: "Ali Masjid",
       },
       {
         name: "Evening Supply",
-        time: "05:00 pm",
-        duration: "1.5hrs",
+        time: { hours: 5, minutes: 0, modifier: "pm" },
+        duration: { hours: 2, minutes: 0 },
         area: "Ali Masjid",
       },
     ],
   },
   {
     date: "Mon Jan 05 2026",
-    hasWater: true,
     area: {
       areaName: "Ali Masjid",
       onDays: 2,
@@ -137,21 +133,20 @@ export const sampleSchedule = [
     schedules: [
       {
         name: "Morning Supply",
-        time: "09:00 am",
-        duration: "3hrs",
+        time: { hours: 9, minutes: 30, modifier: "am" },
+        duration: { hours: 1, minutes: 30 },
         area: "Ali Masjid",
       },
       {
         name: "Evening Supply",
-        time: "05:00 pm",
-        duration: "1.5hrs",
+        time: { hours: 5, minutes: 0, modifier: "pm" },
+        duration: { hours: 2, minutes: 0 },
         area: "Ali Masjid",
       },
     ],
   },
   {
     date: "Sat Jan 10 2026",
-    hasWater: true,
     area: {
       areaName: "Ali Masjid",
       onDays: 2,
@@ -162,21 +157,20 @@ export const sampleSchedule = [
     schedules: [
       {
         name: "Morning Supply",
-        time: "09:00 am",
-        duration: "3hrs",
+        time: { hours: 9, minutes: 30, modifier: "am" },
+        duration: { hours: 1, minutes: 30 },
         area: "Ali Masjid",
       },
       {
         name: "Evening Supply",
-        time: "05:00 pm",
-        duration: "1.5hrs",
+        time: { hours: 5, minutes: 0, modifier: "pm" },
+        duration: { hours: 2, minutes: 0 },
         area: "Ali Masjid",
       },
     ],
   },
   {
     date: "Sun Jan 11 2026",
-    hasWater: true,
     area: {
       areaName: "Ali Masjid",
       onDays: 2,
@@ -187,21 +181,20 @@ export const sampleSchedule = [
     schedules: [
       {
         name: "Morning Supply",
-        time: "09:00 am",
-        duration: "3hrs",
+        time: { hours: 9, minutes: 30, modifier: "am" },
+        duration: { hours: 1, minutes: 30 },
         area: "Ali Masjid",
       },
       {
         name: "Evening Supply",
-        time: "05:00 pm",
-        duration: "1.5hrs",
+        time: { hours: 5, minutes: 0, modifier: "pm" },
+        duration: { hours: 2, minutes: 0 },
         area: "Ali Masjid",
       },
     ],
   },
   {
     date: "Fri Jan 16 2026",
-    hasWater: true,
     area: {
       areaName: "Ali Masjid",
       onDays: 2,
@@ -212,21 +205,20 @@ export const sampleSchedule = [
     schedules: [
       {
         name: "Morning Supply",
-        time: "09:00 am",
-        duration: "3hrs",
+        time: { hours: 9, minutes: 30, modifier: "am" },
+        duration: { hours: 1, minutes: 30 },
         area: "Ali Masjid",
       },
       {
         name: "Evening Supply",
-        time: "05:00 pm",
-        duration: "1.5hrs",
+        time: { hours: 5, minutes: 0, modifier: "pm" },
+        duration: { hours: 2, minutes: 0 },
         area: "Ali Masjid",
       },
     ],
   },
   {
     date: "Sat Jan 17 2026",
-    hasWater: true,
     area: {
       areaName: "Ali Masjid",
       onDays: 2,
@@ -237,14 +229,14 @@ export const sampleSchedule = [
     schedules: [
       {
         name: "Morning Supply",
-        time: "09:00 am",
-        duration: "3hrs",
+        time: { hours: 9, minutes: 30, modifier: "am" },
+        duration: { hours: 1, minutes: 30 },
         area: "Ali Masjid",
       },
       {
         name: "Evening Supply",
-        time: "05:00 pm",
-        duration: "1.5hrs",
+        time: { hours: 5, minutes: 0, modifier: "pm" },
+        duration: { hours: 2, minutes: 0 },
         area: "Ali Masjid",
       },
     ],

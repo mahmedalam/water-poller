@@ -1,18 +1,16 @@
-export function createDateTime(dateStr: string, timeStr: string): Date {
-  const [time, modifier] = timeStr.split(" ");
-  let [hours, minutes] = time.split(":").map(Number);
+export type TTime = {
+  hours: number;
+  minutes: number;
+  modifier: "am" | "pm";
+};
 
-  if (modifier.toLowerCase() === "pm" && hours < 12) hours += 12;
-  if (modifier.toLowerCase() === "am" && hours === 12) hours = 0;
-
-  const date = new Date(dateStr);
-  date.setHours(hours, minutes, 0, 0);
-  return date;
-}
+export type TDuration = {
+  hours: number;
+  minutes: number;
+};
 
 export type TAllSchedules = {
   date: string;
-  hasWater: boolean;
   area: TArea;
   schedules: TSchedule[];
 };
@@ -27,10 +25,20 @@ export type TArea = {
 
 export type TSchedule = {
   name: string;
-  time: string;
-  duration: string;
+  time: TTime;
+  duration: TDuration;
   area: string;
 };
+
+export function createDateTime(dateStr: string, timeObject: TTime): Date {
+  let hours = timeObject.hours;
+  if (timeObject.modifier.toLowerCase() === "pm" && hours < 12) hours += 12;
+  if (timeObject.modifier.toLowerCase() === "am" && hours === 12) hours = 0;
+
+  const date = new Date(dateStr);
+  date.setHours(hours, timeObject.minutes, 0, 0);
+  return date;
+}
 
 export function createSchedule(
   area: TArea,
@@ -72,14 +80,14 @@ const area: TArea = {
 const schedules: TSchedule[] = [
   {
     name: "Morning Supply",
-    time: "09:00 am",
-    duration: "3hrs",
+    time: { hours: 9, minutes: 30, modifier: "am" },
+    duration: { hours: 1, minutes: 30 },
     area: "Ali Masjid",
   },
   {
     name: "Evening Supply",
-    time: "05:00 pm",
-    duration: "1.5hrs",
+    time: { hours: 5, minutes: 0, modifier: "pm" },
+    duration: { hours: 2, minutes: 0 },
     area: "Ali Masjid",
   },
 ];
@@ -116,7 +124,7 @@ export function getUpcomingSchedule(scheduleData: TAllSchedules[]) {
 export function flattenSupplies(upcomingSchedules: TAllSchedules[]) {
   const result: {
     date: string;
-    time: string;
+    time: TTime;
     name: string;
     area: string;
   }[] = [];
