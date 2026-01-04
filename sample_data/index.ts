@@ -2,7 +2,7 @@ import { TAllSchedules } from "@/lib/schedule";
 
 export const sampleSchedule: TAllSchedules[] = [
   {
-    date: "Sun Jan 4 2026",
+    date: "Sun Jan 5 2026",
     area: {
       areaName: "Ali Masjid",
       onDays: 2,
@@ -13,14 +13,14 @@ export const sampleSchedule: TAllSchedules[] = [
     schedules: [
       {
         name: "Morning Supply",
-        time: { hours: 1, minutes: 31, modifier: "am" },
-        duration: { hours: 1, minutes: 30 },
+        time: { hours: 2, minutes: 0, modifier: "am" },
+        duration: { hours: 2, minutes: 44 },
         area: "Ali Masjid",
       },
       {
         name: "Evening Supply",
-        time: { hours: 1, minutes: 32, modifier: "am" },
-        duration: { hours: 2, minutes: 0 },
+        time: { hours: 4, minutes: 33, modifier: "am" },
+        duration: { hours: 0, minutes: 1 },
         area: "Ali Masjid",
       },
     ],

@@ -28,6 +28,7 @@ export type TSchedule = {
   time: TTime;
   duration: TDuration;
   area: string;
+  isActive?: boolean;
 };
 
 export function createDateTime(dateStr: string, timeObject: TTime): Date {
@@ -92,8 +93,11 @@ const schedules: TSchedule[] = [
   },
 ];
 
-export function getUpcomingSchedule(scheduleData: TAllSchedules[]) {
-  const now = new Date();
+export function getUpcomingSchedule(
+  scheduleData: TAllSchedules[],
+  nowDate: number,
+) {
+  const now = new Date(nowDate);
 
   return (
     scheduleData
@@ -104,8 +108,12 @@ export function getUpcomingSchedule(scheduleData: TAllSchedules[]) {
       })
       // remove past times in today
       .map((day) => {
-        const filteredSchedules = day.schedules.filter((item) => {
-          const fullDateTime = createDateTime(day.date, item.time);
+        const filteredSchedules = day.schedules.filter((supply) => {
+          const fullDateTime = createDateTime(day.date, supply.time);
+          fullDateTime.setHours(
+            fullDateTime.getHours() + supply.duration.hours,
+            fullDateTime.getMinutes() + supply.duration.minutes,
+          );
           return fullDateTime > now;
         });
 

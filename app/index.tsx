@@ -22,13 +22,17 @@ import {
   createDateTime,
   flattenSupplies,
   getUpcomingSchedule,
+  TSchedule,
 } from "@/lib/schedule";
 import { initNotifications } from "@/lib/notifications";
 import { scheduleWaterNotifications } from "@/lib/notificationScheduler";
 import { durationToString, timeToString } from "@/lib/utils";
 
 export default function Index() {
-  const upcomingSchedules = getUpcomingSchedule(sampleSchedule);
+  const [now, setNow] = useState(Date.now());
+  const upcomingSchedules = useMemo(() => {
+    return getUpcomingSchedule(sampleSchedule, now);
+  }, [now]);
   const supplies = useMemo(
     () => flattenSupplies(upcomingSchedules),
     [upcomingSchedules],
@@ -50,6 +54,26 @@ export default function Index() {
     initNotifications();
     scheduleWaterNotifications(upcomingSchedules);
   }, [upcomingSchedules]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setNow(Date.now());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  function isSupplyActive(dayDate: string, supply: TSchedule) {
+    const current = new Date(now);
+    const start = createDateTime(dayDate, supply.time);
+    const end = new Date(start);
+    end.setHours(
+      end.getHours() + supply.duration.hours,
+      end.getMinutes() + supply.duration.minutes,
+    );
+
+    return current >= start && current < end;
+  }
 
   return (
     <SafeAreaView className="flex-1 items-center justify-center bg-background">
@@ -96,37 +120,54 @@ export default function Index() {
           </Fragment>
         )}
         data={upcomingSchedules}
-        keyExtractor={(item) => item.date}
+        extraData={now}
+        keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => (
           <View className="px-4">
-            {item.schedules.map((schedule, index) => (
-              <Pressable
-                className="w-full bg-primary/10 p-4 flex gap-3 border border-primary/10 rounded-2xl mb-3"
-                key={index}
-              >
-                <View className="flex flex-row justify-between items-center">
-                  <Text className="text-xl font-inter-bold text-foreground">
-                    {schedule.name}
-                  </Text>
-                  <Text className="px-1.5 py-1 rounded-full bg-primary/10 text-primary">
-                    {item.date.slice(0, -5)}
-                  </Text>
-                </View>
-                <View className="flex gap-2 opacity-75">
-                  <View className="flex flex-row items-center gap-2 opacity-75">
-                    <Image source={clockIconX16} />
-                    <Text className="text-foreground">
-                      {timeToString(schedule.time)} •{" "}
-                      {durationToString(schedule.duration)}
+            {item.schedules.map((schedule, index) => {
+              const active = isSupplyActive(item.date, schedule);
+
+              return (
+                <Pressable
+                  className={`w-full p-4 flex gap-3 border rounded-2xl mb-3
+                ${
+                  active
+                    ? "bg-green-500/10 border-green-500"
+                    : "bg-primary/10 border-primary/10"
+                }
+                `}
+                  key={index}
+                >
+                  <View className="flex flex-row justify-between items-center">
+                    <Text className="text-xl font-inter-bold text-foreground">
+                      {schedule.name}
                     </Text>
+                    {active ? (
+                      <Text className="px-1.5 py-1 rounded-full bg-green-500/10 text-green-500">
+                        ACTIVE
+                      </Text>
+                    ) : (
+                      <Text className="px-1.5 py-1 rounded-full bg-primary/10 text-primary">
+                        {item.date.slice(0, -5)}
+                      </Text>
+                    )}
                   </View>
-                  <View className="flex flex-row items-center gap-2 opacity-75">
-                    <Image source={locationIconX16} />
-                    <Text className="text-foreground">{schedule.area}</Text>
+                  <View className="flex gap-2 opacity-75">
+                    <View className="flex flex-row items-center gap-2 opacity-75">
+                      <Image source={clockIconX16} />
+                      <Text className="text-foreground">
+                        {timeToString(schedule.time)} •{" "}
+                        {durationToString(schedule.duration)}
+                      </Text>
+                    </View>
+                    <View className="flex flex-row items-center gap-2 opacity-75">
+                      <Image source={locationIconX16} />
+                      <Text className="text-foreground">{schedule.area}</Text>
+                    </View>
                   </View>
-                </View>
-              </Pressable>
-            ))}
+                </Pressable>
+              );
+            })}
           </View>
         )}
       />
