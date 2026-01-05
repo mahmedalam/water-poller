@@ -1,6 +1,6 @@
-import { TAllSchedules } from "@/lib/schedule";
+import { TSchedule } from "@/lib/schedule";
 
-export const sampleSchedule: TAllSchedules[] = [
+export const sampleSchedule: TSchedule[] = [
   {
     date: "Sun Jan 5 2026",
     area: {
@@ -10,7 +10,7 @@ export const sampleSchedule: TAllSchedules[] = [
       startDate: "2025-12-23",
       admin: "Arshad Shakoor",
     },
-    schedules: [
+    supplies: [
       {
         name: "Morning Supply",
         time: { hours: 2, minutes: 0, modifier: "am" },
@@ -34,7 +34,7 @@ export const sampleSchedule: TAllSchedules[] = [
       startDate: "2025-12-23",
       admin: "Arshad Shakoor",
     },
-    schedules: [
+    supplies: [
       {
         name: "Morning Supply",
         time: { hours: 9, minutes: 30, modifier: "am" },
@@ -58,7 +58,7 @@ export const sampleSchedule: TAllSchedules[] = [
       startDate: "2025-12-23",
       admin: "Arshad Shakoor",
     },
-    schedules: [
+    supplies: [
       {
         name: "Morning Supply",
         time: { hours: 9, minutes: 30, modifier: "am" },
@@ -82,7 +82,7 @@ export const sampleSchedule: TAllSchedules[] = [
       startDate: "2025-12-23",
       admin: "Arshad Shakoor",
     },
-    schedules: [
+    supplies: [
       {
         name: "Morning Supply",
         time: { hours: 9, minutes: 30, modifier: "am" },
@@ -106,7 +106,7 @@ export const sampleSchedule: TAllSchedules[] = [
       startDate: "2025-12-23",
       admin: "Arshad Shakoor",
     },
-    schedules: [
+    supplies: [
       {
         name: "Morning Supply",
         time: { hours: 9, minutes: 30, modifier: "am" },
@@ -130,7 +130,7 @@ export const sampleSchedule: TAllSchedules[] = [
       startDate: "2025-12-23",
       admin: "Arshad Shakoor",
     },
-    schedules: [
+    supplies: [
       {
         name: "Morning Supply",
         time: { hours: 9, minutes: 30, modifier: "am" },
@@ -154,7 +154,7 @@ export const sampleSchedule: TAllSchedules[] = [
       startDate: "2025-12-23",
       admin: "Arshad Shakoor",
     },
-    schedules: [
+    supplies: [
       {
         name: "Morning Supply",
         time: { hours: 9, minutes: 30, modifier: "am" },
@@ -178,7 +178,7 @@ export const sampleSchedule: TAllSchedules[] = [
       startDate: "2025-12-23",
       admin: "Arshad Shakoor",
     },
-    schedules: [
+    supplies: [
       {
         name: "Morning Supply",
         time: { hours: 9, minutes: 30, modifier: "am" },
@@ -202,7 +202,7 @@ export const sampleSchedule: TAllSchedules[] = [
       startDate: "2025-12-23",
       admin: "Arshad Shakoor",
     },
-    schedules: [
+    supplies: [
       {
         name: "Morning Supply",
         time: { hours: 9, minutes: 30, modifier: "am" },
@@ -226,7 +226,7 @@ export const sampleSchedule: TAllSchedules[] = [
       startDate: "2025-12-23",
       admin: "Arshad Shakoor",
     },
-    schedules: [
+    supplies: [
       {
         name: "Morning Supply",
         time: { hours: 9, minutes: 30, modifier: "am" },

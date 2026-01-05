@@ -22,7 +22,7 @@ import {
   createDateTime,
   flattenSupplies,
   getUpcomingSchedule,
-  TSchedule,
+  TDay,
 } from "@/lib/schedule";
 import { initNotifications } from "@/lib/notifications";
 import { scheduleWaterNotifications } from "@/lib/notificationScheduler";
@@ -63,7 +63,7 @@ export default function Index() {
     return () => clearInterval(timer);
   }, []);
 
-  function isSupplyActive(dayDate: string, supply: TSchedule) {
+  function isSupplyActive(dayDate: string, supply: TDay) {
     const current = new Date(now);
     const start = createDateTime(dayDate, supply.time);
     const end = new Date(start);
@@ -124,8 +124,8 @@ export default function Index() {
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => (
           <View className="px-4">
-            {item.schedules.map((schedule, index) => {
-              const active = isSupplyActive(item.date, schedule);
+            {item.supplies.map((supply, index) => {
+              const active = isSupplyActive(item.date, supply);
 
               return (
                 <Pressable
@@ -140,7 +140,7 @@ export default function Index() {
                 >
                   <View className="flex flex-row justify-between items-center">
                     <Text className="text-xl font-inter-bold text-foreground">
-                      {schedule.name}
+                      {supply.name}
                     </Text>
                     {active ? (
                       <Text className="px-1.5 py-1 rounded-full bg-green-500/10 text-green-500">
@@ -156,13 +156,13 @@ export default function Index() {
                     <View className="flex flex-row items-center gap-2 opacity-75">
                       <Image source={clockIconX16} />
                       <Text className="text-foreground">
-                        {timeToString(schedule.time)} •{" "}
-                        {durationToString(schedule.duration)}
+                        {timeToString(supply.time)} •{" "}
+                        {durationToString(supply.duration)}
                       </Text>
                     </View>
                     <View className="flex flex-row items-center gap-2 opacity-75">
                       <Image source={locationIconX16} />
-                      <Text className="text-foreground">{schedule.area}</Text>
+                      <Text className="text-foreground">{supply.area}</Text>
                     </View>
                   </View>
                 </Pressable>

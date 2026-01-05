@@ -9,10 +9,10 @@ export type TDuration = {
   minutes: number;
 };
 
-export type TAllSchedules = {
+export type TSchedule = {
   date: string;
   area: TArea;
-  schedules: TSchedule[];
+  supplies: TDay[];
 };
 
 export type TArea = {
@@ -23,7 +23,7 @@ export type TArea = {
   admin: string;
 };
 
-export type TSchedule = {
+export type TDay = {
   name: string;
   time: TTime;
   duration: TDuration;
@@ -43,10 +43,10 @@ export function createDateTime(dateStr: string, timeObject: TTime): Date {
 
 export function createSchedule(
   area: TArea,
-  schedules: TSchedule[],
+  supplies: TDay[],
   totalDays = 30,
-): TAllSchedules[] {
-  const newSchedules = [];
+): TSchedule[] {
+  const newSchedule = [];
   const cycle = area.onDays + area.offDays;
 
   const startDate = new Date(area.startDate);
@@ -58,19 +58,19 @@ export function createSchedule(
     const dayInCycle = day % cycle;
 
     if (dayInCycle < area.onDays) {
-      newSchedules.push({
+      newSchedule.push({
         date: currentDate.toDateString(),
         hasWater: true,
         area: area,
-        schedules: schedules,
+        supplies: supplies,
       });
     }
   }
 
-  return newSchedules;
+  return newSchedule;
 }
 
-const area: TArea = {
+export const area: TArea = {
   areaName: "16A Buffer Zone",
   onDays: 2,
   offDays: 4,
@@ -78,7 +78,7 @@ const area: TArea = {
   admin: "Arshad Shakoor",
 };
 
-const schedules: TSchedule[] = [
+export const supplies: TDay[] = [
   {
     name: "Morning Supply",
     time: { hours: 9, minutes: 30, modifier: "am" },
@@ -94,7 +94,7 @@ const schedules: TSchedule[] = [
 ];
 
 export function getUpcomingSchedule(
-  scheduleData: TAllSchedules[],
+  scheduleData: TSchedule[],
   nowDate: number,
 ) {
   const now = new Date(nowDate);
@@ -108,7 +108,7 @@ export function getUpcomingSchedule(
       })
       // remove past times in today
       .map((day) => {
-        const filteredSchedules = day.schedules.filter((supply) => {
+        const filteredSchedules = day.supplies.filter((supply) => {
           const fullDateTime = createDateTime(day.date, supply.time);
           fullDateTime.setHours(
             fullDateTime.getHours() + supply.duration.hours,
@@ -126,10 +126,10 @@ export function getUpcomingSchedule(
   );
 }
 
-// console.log(getUpcomingSchedule(createSchedule(area, schedules)));
+// console.log(getUpcomingSchedule(createSchedule(area, supplies)));
 // Note: Run a cron job after every 30days on appwrite functions or a specific cron job service provider!
 
-export function flattenSupplies(upcomingSchedules: TAllSchedules[]) {
+export function flattenSupplies(upcomingSchedule: TSchedule[]) {
   const result: {
     date: string;
     time: TTime;
@@ -137,13 +137,13 @@ export function flattenSupplies(upcomingSchedules: TAllSchedules[]) {
     area: string;
   }[] = [];
 
-  for (const day of upcomingSchedules) {
-    for (const s of day.schedules) {
+  for (const day of upcomingSchedule) {
+    for (const supply of day.supplies) {
       result.push({
         date: day.date,
-        time: s.time,
-        name: s.name,
-        area: s.area,
+        time: supply.time,
+        name: supply.name,
+        area: supply.area,
       });
     }
   }

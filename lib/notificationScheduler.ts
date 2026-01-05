@@ -1,9 +1,9 @@
-import { clearAllNotifications, scheduleNotification } from "./notifications";
-import { createDateTime, TAllSchedules } from "./schedule";
 import { timeToString } from "@/lib/utils";
+import { clearAllNotifications, scheduleNotification } from "./notifications";
+import { createDateTime, TSchedule } from "./schedule";
 
 export async function scheduleWaterNotifications(
-  upcomingSchedules: TAllSchedules[],
+  upcomingSchedules: TSchedule[],
 ) {
   const now = new Date();
 
@@ -11,7 +11,7 @@ export async function scheduleWaterNotifications(
   await clearAllNotifications();
 
   for (const day of upcomingSchedules) {
-    for (const supply of day.schedules) {
+    for (const supply of day.supplies) {
       const notifyAt = createDateTime(day.date, supply.time);
 
       if (notifyAt <= now) continue;
