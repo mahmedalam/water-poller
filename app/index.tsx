@@ -3,6 +3,7 @@ import {
   Alert,
   FlatList,
   Image,
+  Linking,
   Pressable,
   Text,
   TouchableOpacity,
@@ -13,8 +14,11 @@ import { useCountdown } from "@/hooks/use-count";
 import {
   clockIconX16,
   heroImage,
+  instagramIconX24,
   locationIconX16,
   settingsIconX32,
+  twitterIconX24,
+  URLS,
   waterIconX24,
 } from "@/constants";
 import { Fragment, useEffect, useMemo, useState } from "react";
@@ -118,6 +122,21 @@ export default function Index() {
               </Text>
             </View>
           </Fragment>
+        )}
+        ListFooterComponent={() => (
+          <View className="flex items-center gap-4 px-4 py-6">
+            <Text className="text-foreground text-base font-inter-regular">
+              Powered by <Text className="font-inter-bold">Ahmed Alam</Text>
+            </Text>
+            <View className="flex flex-row gap-4">
+              <TouchableOpacity onPress={() => Linking.openURL(URLS.twitter)}>
+                <Image source={twitterIconX24} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => Linking.openURL(URLS.instagram)}>
+                <Image source={instagramIconX24} />
+              </TouchableOpacity>
+            </View>
+          </View>
         )}
         data={upcomingSchedules}
         extraData={now}
