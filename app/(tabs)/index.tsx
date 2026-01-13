@@ -35,12 +35,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const [now, setNow] = useState(Date.now());
+
+  // Calculate full schedule once (or when config changes)
+  const fullSchedule = useMemo(() => {
+    return createSchedule(scheduleConfig.area, scheduleConfig.supplies, 60);
+  }, []);
+
+  // Filter for UI display based on 'now'
   const upcomingSchedules = useMemo(() => {
-    return getUpcomingSchedule(
-      createSchedule(scheduleConfig.area, scheduleConfig.supplies, 60),
-      now,
-    );
-  }, [now]);
+    return getUpcomingSchedule(fullSchedule, now);
+  }, [fullSchedule, now]);
+
   const supplies = useMemo(
     () => flattenSupplies(upcomingSchedules),
     [upcomingSchedules],
@@ -58,10 +63,13 @@ export default function Index() {
     }
   }, [days, hours, minutes, seconds, supplies.length]);
 
+  // Schedule notifications using the FULL schedule, not the filtered one.
+  // This ensures we schedule future events even if they aren't in the immediate UI view yet,
+  // and crucially, it DOES NOT depend on 'now', so it won't re-run every second.
   useEffect(() => {
     initNotifications();
-    scheduleWaterNotifications(upcomingSchedules);
-  }, [upcomingSchedules]);
+    scheduleWaterNotifications(fullSchedule);
+  }, [fullSchedule]);
 
   useEffect(() => {
     const timer = setInterval(() => {
