@@ -1,41 +1,45 @@
-import { sampleSchedule } from "@/sample_data";
-import {
-  Alert,
-  FlatList,
-  Image,
-  Linking,
-  Pressable,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useCountdown } from "@/hooks/use-count";
+import { AppText as Text } from "@/components/app-text";
 import {
   clockIconX16,
   heroImage,
   instagramIconX24,
   locationIconX16,
-  settingsIconX32,
+  settingsCircleIconX40,
   twitterIconX24,
   URLS,
   waterIconX24,
 } from "@/constants";
-import { Fragment, useEffect, useMemo, useState } from "react";
-import {
-  createDateTime,
-  flattenSupplies,
-  getUpcomingSchedule,
-  TDay,
-} from "@/lib/schedule";
+import { useCountdown } from "@/hooks/use-count";
 import { initNotifications } from "@/lib/notifications";
 import { scheduleWaterNotifications } from "@/lib/notificationScheduler";
+import {
+  createDateTime,
+  createSchedule,
+  flattenSupplies,
+  getUpcomingSchedule,
+  scheduleConfig,
+  TDay,
+} from "@/lib/schedule";
 import { durationToString, timeToString } from "@/lib/utils";
+import { router } from "expo-router";
+import { Fragment, useEffect, useMemo, useState } from "react";
+import {
+  FlatList,
+  Image,
+  Linking,
+  Pressable,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const [now, setNow] = useState(Date.now());
   const upcomingSchedules = useMemo(() => {
-    return getUpcomingSchedule(sampleSchedule, now);
+    return getUpcomingSchedule(
+      createSchedule(scheduleConfig.area, scheduleConfig.supplies, 60),
+      now,
+    );
   }, [now]);
   const supplies = useMemo(
     () => flattenSupplies(upcomingSchedules),
@@ -80,7 +84,7 @@ export default function Index() {
   }
 
   return (
-    <SafeAreaView className="flex-1 items-center justify-center bg-background">
+    <SafeAreaView className="bg-background">
       {/*List of Schedules*/}
       <FlatList
         className="w-full"
@@ -89,14 +93,13 @@ export default function Index() {
             {/*Hero*/}
             <View className="w-full aspect-[1440/1040]">
               <TouchableOpacity
-                onPress={() =>
-                  Alert.alert("Settings will available in next update")
-                }
+                onPress={() => router.push("/settings")}
                 className="absolute top-3 right-3 z-10"
               >
                 <Image
-                  source={settingsIconX32}
-                  className="size-8 bg-primary/15 rounded-full"
+                  source={settingsCircleIconX40}
+                  className="size-10 bg-primary/15 rounded-full"
+                  resizeMode="cover"
                 />
               </TouchableOpacity>
               <Image

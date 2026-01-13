@@ -20,7 +20,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.waterpoller"
+      "package": "com.zorjn.waterpoller"
     },
     "web": {
       "bundler": "metro",
@@ -29,6 +29,19 @@
     },
     "plugins": [
       "expo-router",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Inter-Black.ttf",
+            "./assets/fonts/Inter-Bold.ttf",
+            "./assets/fonts/Inter-SemiBold.ttf",
+            "./assets/fonts/Inter-Medium.ttf",
+            "./assets/fonts/Inter-Regular.ttf",
+            "./assets/fonts/Inter-Light.ttf"
+          ]
+        }
+      ],
       [
         "expo-splash-screen",
         {
@@ -45,6 +58,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "b58b4e1f-5443-42b0-8372-3f686ec3c4a4"
+      }
     }
   }
 }

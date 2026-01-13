@@ -9,12 +9,6 @@ export type TDuration = {
   minutes: number;
 };
 
-export type TSchedule = {
-  date: string;
-  area: TArea;
-  supplies: TDay[];
-};
-
 export type TArea = {
   areaName: string;
   onDays: number;
@@ -29,6 +23,17 @@ export type TDay = {
   duration: TDuration;
   area: string;
   isActive?: boolean;
+};
+
+export type TSchedule = {
+  date: string;
+  area: TArea;
+  supplies: TDay[];
+};
+
+export type TScheduleConfig = {
+  area: TArea;
+  supplies: TDay[];
 };
 
 export function createDateTime(dateStr: string, timeObject: TTime): Date {
@@ -70,28 +75,29 @@ export function createSchedule(
   return newSchedule;
 }
 
-export const area: TArea = {
-  areaName: "16A Buffer Zone",
-  onDays: 2,
-  offDays: 4,
-  startDate: "2025-12-23",
-  admin: "Arshad Shakoor",
+export const scheduleConfig: TScheduleConfig = {
+  area: {
+    areaName: "16A Buffer Zone",
+    onDays: 2,
+    offDays: 4,
+    startDate: "2026-01-07",
+    admin: "Arshad Shakoor",
+  },
+  supplies: [
+    {
+      name: "Morning Supply",
+      time: { hours: 9, minutes: 0, modifier: "am" },
+      duration: { hours: 3, minutes: 0 },
+      area: "Ali Masjid",
+    },
+    {
+      name: "Evening Supply",
+      time: { hours: 5, minutes: 0, modifier: "pm" },
+      duration: { hours: 2, minutes: 0 },
+      area: "Ali Masjid",
+    },
+  ],
 };
-
-export const supplies: TDay[] = [
-  {
-    name: "Morning Supply",
-    time: { hours: 9, minutes: 30, modifier: "am" },
-    duration: { hours: 1, minutes: 30 },
-    area: "Ali Masjid",
-  },
-  {
-    name: "Evening Supply",
-    time: { hours: 5, minutes: 0, modifier: "pm" },
-    duration: { hours: 2, minutes: 0 },
-    area: "Ali Masjid",
-  },
-];
 
 export function getUpcomingSchedule(
   scheduleData: TSchedule[],
